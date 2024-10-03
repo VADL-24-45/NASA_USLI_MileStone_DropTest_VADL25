@@ -2,6 +2,8 @@
 #include "DataLogger.h"
 #include "IMU.h"
 
+#define SERVO_PIN 4
+#define LATCH_PIN 11
 // IMU object and local data copy
 IMU imu; 
 IMU::Data localCopy;
@@ -11,12 +13,15 @@ IntervalTimer logTimer;  // Timer to trigger logging
 DataLogger logger("datalog.csv");
 
 bool ledState = false;  // LED state flag
+bool landedState = false;
 
 /**
  * Function prototypes
  */
 void logData();
 void blinkLED();
+void servoInit();
+void updateServo(bool landedState);
 
 /**
  * @brief Setup function, initializes serial, IMU, SD card, and timer
@@ -25,6 +30,10 @@ void setup()
 {
     Serial.begin(115200); // Initialize serial communication
     delay(1000);          // Wait to ensure the serial is ready
+    
+    pinMode(SERVO_PIN, OUTPUT);
+    pinMode(LATCH_PIN, OUTPUT);
+
 
     imu.begin();          // Initialize IMU
 
@@ -51,10 +60,12 @@ void setup()
  */
 void loop() 
 {
-    Serial.print("Time: ");
-    Serial.println(float(millis()));  // Print current time in milliseconds
-
     blinkLED();  // Blink onboard LED
+    updateServo(landedState);
+
+    if (millis()/1000.0 > 20 )
+        landedState = true;
+
 }
 
 /**
@@ -63,6 +74,11 @@ void loop()
  */
 void logData()
 {
+    Serial.print("Time: ");
+    Serial.print(float(millis()));  // Print current time in milliseconds
+    Serial.print("---");
+    Serial.println(localCopy.localQw);
+
     localCopy = imu.imuData;  // Update the local copy of IMU data
     
     // Log data to SD card using IMU data and current time
@@ -87,5 +103,29 @@ void blinkLED()
         lastBlinkTime = currentMillis;  // Update the last blink time
         ledState = !ledState;           // Toggle LED state
         digitalWrite(13, ledState);     // Set the LED to the new state
+    }
+}
+
+void updateServo(bool landedState)
+{
+    if (!landedState)
+    {
+        digitalWrite(LATCH_PIN, LOW);
+        // Generate PWM for 0 degrees
+        digitalWrite(SERVO_PIN, HIGH);
+        delayMicroseconds(1300);  // 1 ms pulse width for 0 degrees
+        digitalWrite(SERVO_PIN, LOW);
+        delayMicroseconds(18700);  // Complete the 20 ms period (20 ms - 1 ms = 19 ms)
+        delay(1000);  // Wait for a second
+    }
+    else
+    {
+        digitalWrite(LATCH_PIN, HIGH);
+        // Generate PWM for 90 degrees
+        digitalWrite(SERVO_PIN, HIGH);
+        delayMicroseconds(2000);  // 1.5 ms pulse width for 90 degrees
+        digitalWrite(SERVO_PIN, LOW);
+        delayMicroseconds(18000);  // Complete the 20 ms period (20 ms - 1.5 ms = 18.5 ms)
+        delay(1000);  // Wait for a second
     }
 }
