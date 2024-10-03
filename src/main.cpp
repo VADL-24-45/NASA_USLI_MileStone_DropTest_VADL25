@@ -76,9 +76,9 @@ void loop()
     detectLanding(localCopy.localAltitude, localCopy.localAccMag)
     updateServo(landedState)
   
-    if(landedState) {
-      digitalWrite(LANDING_DETECTED, HIGH);
-    }
+    // if(landedState) {
+    //   digitalWrite(LANDING_DETECTED, HIGH);
+    // }
 }
 
 /**
