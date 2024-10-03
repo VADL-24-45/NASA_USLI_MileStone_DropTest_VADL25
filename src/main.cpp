@@ -2,6 +2,7 @@
 #include "DataLogger.h"
 #include "IMU.h"
 
+// pin declaration
 #define SERVO_PIN 4
 #define LATCH_PIN 11
 // IMU object and local data copy
@@ -12,8 +13,17 @@ IntervalTimer logTimer;  // Timer to trigger logging
 // DataLogger object for SD card logging
 DataLogger logger("datalog.csv");
 
+// threshold values
+// float timeoutTime 60                       // sec
+// float landingMinTime 3                     // sec
+float langingAccMagThreshold 40               // m/s^2
+float GroundLevel 168                         // CHANGE THIS VALUE TO CALIBRATE IMU
+float landingAltitudeThreshold = GroundLevel + 1
+float initialAltitudeThreshold = GroundLevel + 15 
+
 bool ledState = false;  // LED state flag
 bool landedState = false;
+bool initialAltitudeAchieved = false; 
 
 /**
  * Function prototypes
@@ -63,9 +73,6 @@ void loop()
     blinkLED();  // Blink onboard LED
     updateServo(landedState);
 
-    if (millis()/1000.0 > 20 )
-        landedState = true;
-
 }
 
 /**
@@ -103,6 +110,22 @@ void blinkLED()
         lastBlinkTime = currentMillis;  // Update the last blink time
         ledState = !ledState;           // Toggle LED state
         digitalWrite(13, ledState);     // Set the LED to the new state
+    }
+}
+
+void detectLanding(float altitude, float accel_mag) {
+    // timeoutTime used in future (need to add elapsed_time to function header) 
+    // if (elapsed_time > timeoutTime) {
+    //     landedState = true; 
+    // }
+
+    if (altitude > initialAltitudeThreshold) {
+        initialAltitudeAchieved = true; 
+    }
+    
+    // update this IF statement in the future to use pdsMinTime (elapsed_time > pdsMinTime)
+    if (initialAltitudeAchieved && altitude < landingAltitudeThreshold && accel_mag > langingAccMagThreshold) {
+        landedState = true;
     }
 }
 
