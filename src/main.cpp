@@ -70,9 +70,15 @@ void setup()
  */
 void loop() 
 {
+    // elapsed_time = millis() - start_time; 
+    
     blinkLED();  // Blink onboard LED
-    updateServo(landedState);
-
+    detectLanding(localCopy.localAltitude, localCopy.localAccMag)
+    updateServo(landedState)
+  
+    if(landedState) {
+      digitalWrite(LANDING_DETECTED, HIGH);
+    }
 }
 
 /**
