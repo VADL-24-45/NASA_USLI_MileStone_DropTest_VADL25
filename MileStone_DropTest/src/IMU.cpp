@@ -14,9 +14,9 @@ void IMU::begin() {
     initializeBaud();
     Serial.println("IMU Initialized");
 
-    requestTimer.begin([this]() { this->requestData(); }, 5000);  // 100 Hz
-    updateTimer.begin([this]() { this->updateData(); }, 5000);    // 100 Hz
-    processTimer.begin([this]() { this->processIMUData(); }, 1000);
+    requestTimer.begin([this]() { this->requestData(); }, 2500);  // 100 Hz
+    updateTimer.begin([this]() { this->updateData(); }, 2500);    // 100 Hz
+    processTimer.begin([this]() { this->processIMUData(); }, 2000);
 }
 
 

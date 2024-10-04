@@ -59,7 +59,7 @@ void setup()
     logger.writeHeader();
 
     // Start the logging timer (100Hz logging)
-    logTimer.begin(logData, 10000);
+    logTimer.begin(logData, 5000);
 
     pinMode(13, OUTPUT);  // Set onboard LED pin as output
 
