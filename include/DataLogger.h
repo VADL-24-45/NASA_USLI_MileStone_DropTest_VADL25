@@ -51,6 +51,8 @@ public:
      * @param qx Quaternion X component.
      * @param qy Quaternion Y component.
      * @param qz Quaternion Z component.
+     * @param initialAltAchieved Whether initial altitude (on the way up) has been achieved or not
+     * @param landingDetected Whether landing has been detected
      * @return None
      * @note This function logs all sensor data in a single line, formatted to the file.
      */
