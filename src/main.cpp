@@ -116,6 +116,10 @@ void blinkLED()
     }
 }
 
+/**
+ * @brief Landing detection function
+ * Uses altitude and acceleration to determine the state of the payload
+ */
 void detectLanding(float altitude, float accel_mag) {
     // timeoutTime used in future (need to add elapsed_time to function header) 
     // if (elapsed_time > timeoutTime) {
