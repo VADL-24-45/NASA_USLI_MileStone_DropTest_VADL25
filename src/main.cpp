@@ -16,9 +16,9 @@ DataLogger logger("datalog.csv");
 // threshold values
 // float timeoutTime 60                       // sec
 // float landingMinTime 3                     // sec
-float langingAccMagThreshold 40               // m/s^2
+float langingAccMagThreshold 25               // m/s^2
 float GroundLevel 168                         // CHANGE THIS VALUE TO CALIBRATE IMU
-float landingAltitudeThreshold = GroundLevel + 1
+float landingAltitudeThreshold = GroundLevel + 1.5
 float initialAltitudeThreshold = GroundLevel + 15 
 
 bool ledState = false;  // LED state flag
