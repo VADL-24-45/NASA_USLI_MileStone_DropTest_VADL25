@@ -97,7 +97,7 @@ void logData()
                    localCopy.localAccelX, localCopy.localAccelY, localCopy.localAccelZ, 
                    localCopy.localGyroX, localCopy.localGyroY, localCopy.localGyroZ, 
                    localCopy.localTemperature, localCopy.localPressure, localCopy.localAltitude, 
-                   localCopy.localAccMag, localCopy.localQw, localCopy.localQx, localCopy.localQy, localCopy.localQz);
+                   localCopy.localAccMag, localCopy.localQw, localCopy.localQx, localCopy.localQy, localCopy.localQz, initialAltitudeThreshold, landingState);
 }
 
 /**
