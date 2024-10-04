@@ -75,7 +75,7 @@ void loop()
     
     blinkLED();  // Blink onboard LED
     detectLanding(localCopy.localAltitude, localCopy.localAccMag)
-    updateServo()
+    updateServo();
 }
 
 /**
@@ -97,7 +97,8 @@ void logData()
                    localCopy.localAccelX, localCopy.localAccelY, localCopy.localAccelZ, 
                    localCopy.localGyroX, localCopy.localGyroY, localCopy.localGyroZ, 
                    localCopy.localTemperature, localCopy.localPressure, localCopy.localAltitude, 
-                   localCopy.localAccMag, localCopy.localQw, localCopy.localQx, localCopy.localQy, localCopy.localQz, initialAltitudeThreshold, landedState);
+                   localCopy.localAccMag, localCopy.localQw, localCopy.localQx, localCopy.localQy, localCopy.localQz, 
+                   initialAltitudeThreshold, landedState);
 }
 
 /**

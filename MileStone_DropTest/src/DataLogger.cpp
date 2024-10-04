@@ -25,7 +25,7 @@ bool DataLogger::begin() {
 void DataLogger::writeHeader() {
     myFile = SD.open(filename, FILE_WRITE);
     if (myFile) {
-        myFile.println("time,magX,magY,magZ,accelX,accelY,accelZ,gyroX,gyroY,gyroZ,temperature,pressure,altitude,accMag,qw,qx,qy,qz");
+        myFile.println("time,magX,magY,magZ,accelX,accelY,accelZ,gyroX,gyroY,gyroZ,temperature,pressure,altitude,accMag,qw,qx,qy,qz,initialAltAchieved,landingDetected");
         myFile.close();
     }
 }
@@ -35,7 +35,7 @@ void DataLogger::logData(float time, float magX, float magY, float magZ,
                          float accelX, float accelY, float accelZ, 
                          float gyroX, float gyroY, float gyroZ, 
                          float temperature, float pressure, float altitude, 
-                         float accMag, float qw, float qx, float qy, float qz) {
+                         float accMag, float qw, float qx, float qy, float qz, bool initialAltAchieved, bool landingDetected) {
 
     myFile = SD.open(filename, FILE_WRITE);
     if (myFile) {
@@ -56,7 +56,9 @@ void DataLogger::logData(float time, float magX, float magY, float magZ,
         myFile.print(qw); myFile.print(", ");
         myFile.print(qx); myFile.print(", ");
         myFile.print(qy); myFile.print(", ");
-        myFile.println(qz);
+        myFile.print(qz); myFile.print(", ");
+        myFile.print(initialAltAchieved); myFile.print(", ");
+        myFile.println(landingDetected); 
         myFile.close();
     }
 }

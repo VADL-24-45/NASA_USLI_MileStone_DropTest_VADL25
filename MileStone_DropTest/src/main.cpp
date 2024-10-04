@@ -14,11 +14,11 @@ IntervalTimer logTimer;  // Timer to trigger logging
 DataLogger logger("datalog.csv");
 
 // threshold values
-// float timeoutTime 60                       // sec
-// float landingMinTime 3                     // sec
+// float timeoutTime 60                          // sec
+// float landingMinTime 3                        // sec
 float landingAccMagThreshold = 25;               // m/s^2
-float GroundLevel = 113;                         // CHANGE THIS VALUE TO CALIBRATE IMU
-float landingAltitudeThreshold = GroundLevel + 20;
+float GroundLevel = 168;                         // CHANGE THIS VALUE TO CALIBRATE IMU
+float landingAltitudeThreshold = GroundLevel + 1.5;
 float initialAltitudeThreshold = GroundLevel + 15;
 
 bool ledState = false;  // LED state flag
@@ -31,9 +31,8 @@ bool initialAltitudeAchieved = false;
 void logData();
 void blinkLED();
 void servoInit();
-void updateServo(bool landedState);
 void detectLanding(float altitude, float accel_mag);
-void updateServo(bool landedState);
+void updateServo();
 
 /**
  * @brief Setup function, initializes serial, IMU, SD card, and timer
@@ -76,11 +75,7 @@ void loop()
     
     blinkLED();  // Blink onboard LED
     detectLanding(localCopy.localAltitude, localCopy.localAccMag);
-    updateServo(landedState);
-  
-    // if(landedState) {
-    //   digitalWrite(LANDING_DETECTED, HIGH);
-    // }
+    updateServo();
 }
 
 /**
@@ -102,7 +97,8 @@ void logData()
                    localCopy.localAccelX, localCopy.localAccelY, localCopy.localAccelZ, 
                    localCopy.localGyroX, localCopy.localGyroY, localCopy.localGyroZ, 
                    localCopy.localTemperature, localCopy.localPressure, localCopy.localAltitude, 
-                   localCopy.localAccMag, localCopy.localQw, localCopy.localQx, localCopy.localQy, localCopy.localQz);
+                   localCopy.localAccMag, localCopy.localQw, localCopy.localQx, localCopy.localQy, localCopy.localQz, 
+                   initialAltitudeThreshold, landedState);
 }
 
 /**
@@ -114,13 +110,20 @@ void blinkLED()
     unsigned long currentMillis = millis();  // Get current time in milliseconds
 
     // Toggle the LED state every 500 milliseconds
-    if (currentMillis - lastBlinkTime >= 500) {
+    if (!landedState && currentMillis - lastBlinkTime >= 500) {
         lastBlinkTime = currentMillis;  // Update the last blink time
         ledState = !ledState;           // Toggle LED state
         digitalWrite(13, ledState);     // Set the LED to the new state
     }
+    else if (landedState) {
+        digitalWrite(13, HIGH);
+    }
 }
 
+/**
+ * @brief Landing detection function
+ * Uses altitude and acceleration to determine the state of the payload
+ */
 void detectLanding(float altitude, float accel_mag) {
     // timeoutTime used in future (need to add elapsed_time to function header) 
     // if (elapsed_time > timeoutTime) {
@@ -137,7 +140,7 @@ void detectLanding(float altitude, float accel_mag) {
     }
 }
 
-void updateServo(bool landedState)
+void updateServo()
 {
     if (!landedState)
     {

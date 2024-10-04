@@ -60,7 +60,8 @@ public:
                  float accelX, float accelY, float accelZ, 
                  float gyroX, float gyroY, float gyroZ, 
                  float temperature, float pressure, float altitude, 
-                 float accMag, float qw, float qx, float qy, float qz, bool initialAltAchieved, bool landingDetected);
+                 float accMag, float qw, float qx, float qy, float qz, 
+                 bool initialAltAchieved, bool landingDetected);
 
 private:
     const char* filename;  ///< The name of the file used for logging data.

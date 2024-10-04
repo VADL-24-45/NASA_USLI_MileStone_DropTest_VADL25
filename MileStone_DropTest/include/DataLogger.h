@@ -51,6 +51,8 @@ public:
      * @param qx Quaternion X component.
      * @param qy Quaternion Y component.
      * @param qz Quaternion Z component.
+     * @param initialAltAchieved Whether initial altitude (on the way up) has been achieved or not
+     * @param landingDetected Whether landing has been detected
      * @return None
      * @note This function logs all sensor data in a single line, formatted to the file.
      */
@@ -58,7 +60,8 @@ public:
                  float accelX, float accelY, float accelZ, 
                  float gyroX, float gyroY, float gyroZ, 
                  float temperature, float pressure, float altitude, 
-                 float accMag, float qw, float qx, float qy, float qz);
+                 float accMag, float qw, float qx, float qy, float qz, 
+                 bool initialAltAchieved, bool landingDetected);
 
 private:
     const char* filename;  ///< The name of the file used for logging data.
