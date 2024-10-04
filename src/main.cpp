@@ -74,11 +74,7 @@ void loop()
     
     blinkLED();  // Blink onboard LED
     detectLanding(localCopy.localAltitude, localCopy.localAccMag)
-    updateServo(landedState)
-  
-    // if(landedState) {
-    //   digitalWrite(LANDING_DETECTED, HIGH);
-    // }
+    updateServo()
 }
 
 /**
@@ -135,7 +131,7 @@ void detectLanding(float altitude, float accel_mag) {
     }
 }
 
-void updateServo(bool landedState)
+void updateServo()
 {
     if (!landedState)
     {
