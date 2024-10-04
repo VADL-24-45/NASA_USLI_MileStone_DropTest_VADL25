@@ -109,10 +109,13 @@ void blinkLED()
     unsigned long currentMillis = millis();  // Get current time in milliseconds
 
     // Toggle the LED state every 500 milliseconds
-    if (currentMillis - lastBlinkTime >= 500) {
+    if (!landedState && currentMillis - lastBlinkTime >= 500) {
         lastBlinkTime = currentMillis;  // Update the last blink time
         ledState = !ledState;           // Toggle LED state
         digitalWrite(13, ledState);     // Set the LED to the new state
+    }
+    else if (landedState) {
+        digitalWrite(13, HIGH);
     }
 }
 
