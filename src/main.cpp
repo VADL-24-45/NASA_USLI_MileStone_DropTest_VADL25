@@ -16,7 +16,7 @@ DataLogger logger("datalog.csv");
 // threshold values
 // float timeoutTime 60                       // sec
 // float landingMinTime 3                     // sec
-float langingAccMagThreshold 25               // m/s^2
+float landingAccMagThreshold 25               // m/s^2
 float GroundLevel 168                         // CHANGE THIS VALUE TO CALIBRATE IMU
 float landingAltitudeThreshold = GroundLevel + 1.5
 float initialAltitudeThreshold = GroundLevel + 15 
@@ -31,7 +31,8 @@ bool initialAltitudeAchieved = false;
 void logData();
 void blinkLED();
 void servoInit();
-void updateServo(bool landedState);
+void detectLanding(float altitude, float accel_mag);
+void updateServo();
 
 /**
  * @brief Setup function, initializes serial, IMU, SD card, and timer
@@ -126,7 +127,7 @@ void detectLanding(float altitude, float accel_mag) {
     }
     
     // update this IF statement in the future to use pdsMinTime (elapsed_time > pdsMinTime)
-    if (initialAltitudeAchieved && altitude < landingAltitudeThreshold && accel_mag > langingAccMagThreshold) {
+    if (initialAltitudeAchieved && altitude < landingAltitudeThreshold && accel_mag > landingAccMagThreshold) {
         landedState = true;
     }
 }
