@@ -14,9 +14,9 @@ void IMU::begin() {
     initializeBaud();
     Serial.println("IMU Initialized");
 
-    requestTimer.begin([this]() { this->requestData(); }, 2500);  // 100 Hz
-    updateTimer.begin([this]() { this->updateData(); }, 2500);    // 100 Hz
-    processTimer.begin([this]() { this->processIMUData(); }, 2000);
+    requestTimer.begin([this]() { this->requestData(); }, 20000);  // 50 Hz
+    updateTimer.begin([this]() { this->updateData(); }, 20000);    // 50 Hz
+    processTimer.begin([this]() { this->processIMUData(); }, 1000);
 }
 
 
@@ -35,10 +35,10 @@ void IMU::initializeBaud() {
     Serial3.begin(115200);
     delay(1000);
     flushMessage();
-    Serial3.print("$VNWRG,05,460800*XX\r\n");
+    Serial3.print("$VNWRG,05,57600*XX\r\n");
     delay(1000);
     Serial3.end();
-    Serial3.begin(460800);
+    Serial3.begin(57600);
 }
 
 
@@ -156,24 +156,8 @@ float IMU::getAccelerationMagnitude() const {
 
 
 float IMU::calculateAltitude(float pressure) const {
-    static float buffer[20] = {0};
-    static int bufferIdx = 0;
-
     const float seaLevelPressure = 101.325;  // Standard atmospheric pressure at sea level in hPa
     float currentAltitude = 44330.0 * (1.0 - pow(pressure / seaLevelPressure, 0.1903));
 
-    buffer[bufferIdx] = currentAltitude;
-
-
-    float averageAltitude = 0;
-    for (int i = 0; i < 20; i ++)
-    {
-        averageAltitude += buffer[i];
-    }
-
-    averageAltitude = averageAltitude / 20.0;
-
-    bufferIdx = (bufferIdx + 1) % 20;
-
-    return averageAltitude;
+    return currentAltitude;
 }
