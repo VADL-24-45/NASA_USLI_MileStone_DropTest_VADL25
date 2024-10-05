@@ -86,7 +86,7 @@ public:
         float localGyroY;     ///< Local gyroscope Y value
         float localGyroZ;     ///< Local gyroscope Z value
         float localTemperature;   ///< Local temperature value
-        unsigned long localPressure;      ///< Local atmospheric pressure
+        float localPressure;      ///< Local atmospheric pressure
         float localAltitude;      ///< Local altitude value calculated from pressure
         float localAccMag;        ///< Local total magnitude of acceleration
         float localQw;            ///< Local quaternion W value

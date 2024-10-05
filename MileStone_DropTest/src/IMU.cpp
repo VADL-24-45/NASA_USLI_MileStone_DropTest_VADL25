@@ -158,6 +158,11 @@ float IMU::getAccelerationMagnitude() const {
 float IMU::calculateAltitude(float pressure) const {
     const float seaLevelPressure = 101.325;  // Standard atmospheric pressure at sea level in hPa
     float currentAltitude = 44330.0 * (1.0 - pow(pressure / seaLevelPressure, 0.1903));
+    static float pastAltitude;
+    if (currentAltitude <= 4000 && currentAltitude >= 60) {
+        pastAltitude = currentAltitude;
+        return currentAltitude;
+    }
 
-    return currentAltitude;
+    return pastAltitude;
 }
