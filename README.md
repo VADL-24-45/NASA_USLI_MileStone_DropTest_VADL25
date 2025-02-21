@@ -1,6 +1,10 @@
-# Arduino Payload Logger and Servo Deployment
+# Payload Logger and Servo Deployment
 
 This repository contains Arduino code for a payload that monitors and logs sensor data (altitude, acceleration, gyroscope, etc.) from an **IMU** (Inertial Measurement Unit) to an SD card at a rate of 100 Hz. Once certain landing conditions (based on altitude and acceleration thresholds) are detected, a servo mechanism is triggered to change its position. Additionally, an onboard LED provides a simple visual status indicator.
+
+![image](https://github.com/user-attachments/assets/0e199425-5c4e-425d-8099-5e25e6f3ebda)
+![image](https://github.com/user-attachments/assets/f163ba24-ae6e-469d-ab4a-cc56ddeccd5b)
+
 
 Note: Main contributor is TruuEE (Commit 13cb9e5).
 
