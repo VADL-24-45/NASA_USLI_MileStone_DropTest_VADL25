@@ -33,9 +33,9 @@ Note: Main contributor is TruuEE (Commit 13cb9e5).
 
 ## Hardware Requirements
 
-1. **Arduino Board** (e.g., Teensy or Arduino Uno):
-   - Must support hardware timers for 100 Hz logging. (In the example, a Teensy `IntervalTimer` is used.)
-2. **IMU Sensor** (e.g., MPU6050, LSM9DS1, or similar).
+1. **Arduino Board** (Teensy 4.1):
+   - Must support hardware timers for 100 Hz logging.
+2. **IMU Sensor** (VectorNAV VN100).
 3. **SD Card Module** (with microSD card).
 4. **Servo** (or any PWM-controlled actuator).
 5. **LED** (onboard or external; the code uses the onboard LED on pin 13).
@@ -48,15 +48,12 @@ Note: Main contributor is TruuEE (Commit 13cb9e5).
 
 ## Dependencies
 
-- **Arduino Core** for your specific board (e.g., Teensyduino, Arduino AVR Boards, etc.).
+- **Arduino Core** Teensyduino
 - **SPI** and **SD** libraries for reading/writing to the SD card.
-- **IntervalTimer** (Teensy or equivalent for your board) for precise timing interrupts at 100 Hz.
+- **IntervalTimer** (Teensy) Hardware timer for precise timing interrupts at 100 Hz.
 - Custom libraries:
   - `DataLogger.h`
   - `IMU.h`
-  
-*(You may need to install additional libraries for your IMU, such as `Adafruit_Sensor`, `Adafruit_BMP3XX`, etc. The exact dependencies may vary based on your hardware setup and are referenced within `IMU.h`.)*
-
 ---
 
 ## Project Structure
@@ -67,10 +64,8 @@ Note: Main contributor is TruuEE (Commit 13cb9e5).
 ├── DataLogger.cpp       # Implementation of the DataLogger class
 ├── IMU.h                # Custom IMU class header
 ├── IMU.cpp              # Implementation of the IMU class
-└── main.ino             # Arduino sketch (setup & loop)
+└── main.cpp            # Arduino sketch (setup & loop)
 ```
-
-*(Some files are shown for illustration. Actual structure may differ depending on your setup.)*
 
 ---
 
