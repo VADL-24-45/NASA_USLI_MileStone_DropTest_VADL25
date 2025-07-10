@@ -151,7 +151,7 @@ This repository contains Arduino code for a payload that monitors and logs senso
 ## License
 
 This project is provided as-is for educational and experimental purposes. Feel free to adapt and modify the code for your own use. If you share or distribute it, please give appropriate credit.
-
+Note: Main contributor is TruuEE (Commit 13cb9e5).
 ---
 
 **Happy Logging and Safe Landings!**  
