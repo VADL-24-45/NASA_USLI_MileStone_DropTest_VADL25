@@ -10,8 +10,6 @@ This repository contains Arduino code for a payload that monitors and logs senso
   <img src="https://github.com/user-attachments/assets/f163ba24-ae6e-469d-ab4a-cc56ddeccd5b" alt="Image 2">
 </p>
 
-Note: Main contributor is TruuEE (Commit 13cb9e5).
-
 ---
 
 ## Table of Contents
